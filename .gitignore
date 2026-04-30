@@ -1,0 +1,43 @@
+# Environment variables (contains API keys)
+.env
+
+# Generated output - runtime artifacts, not part of the source
+content/
+videoContent/
+cost_reports/
+cost_report_*.txt
+generated_songs_llm.json
+generated_songs_llm.txt
+
+# Generator state (machine-specific progress tracking)
+.generation_progress.json
+
+# RAG / vector store data (rebuilt automatically at runtime)
+rag_data/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environment
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Excel temp files
+~$*.xlsx
+
+# Logs
+*.log

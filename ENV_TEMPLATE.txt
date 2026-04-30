@@ -1,0 +1,151 @@
+# ==============================================================================
+# SONG GENERATOR CONFIGURATION (.env file template)
+# ==============================================================================
+# Copy this to .env and fill in your values
+
+# Required: Gemini API Key (get from https://makersuite.google.com/app/apikey)
+GEMINI_API_KEY=your_actual_api_key_here
+
+# ==============================================================================
+# DUAL-MODEL OPTIMIZATION (NEW! Cost-saving strategy)
+# ==============================================================================
+# Use cheap Flash for validation/analysis, expensive Pro ONLY for song generation
+USE_DUAL_MODELS=true
+
+# Flash Model: Used for analysis, quality checks, metadata (cheap operations)
+FLASH_MODEL=gemini-1.5-flash
+
+# Pro Model: Used ONLY for actual song/lyrics generation (expensive, high quality)
+PRO_MODEL=gemini-1.5-pro
+
+# Legacy single-model mode (if USE_DUAL_MODELS=false):
+GEMINI_MODEL=gemini-1.5-flash
+
+# ==============================================================================
+# QUALITY CONTROL SETTINGS (NEW!)
+# ==============================================================================
+
+# OPTIMIZED: Separate thresholds for each quality aspect
+# This gives you fine-grained control over what matters most
+
+# Hindi Quality (Grammar + Poetry): How perfect should the language be?
+# - 9-10 = Perfect grammar, poetic (may need retries)
+# - 8 = Excellent, minor issues okay (RECOMMENDED)
+# - 7 = Good, some flexibility
+HINDI_THRESHOLD=8
+
+# Singability (Rhythm + Melody combined): How easy to sing?
+# - 9-10 = Perfect meter, catchy hooks (may need retries)
+# - 8 = Very singable, minor deviations okay
+# - 7 = Singable, more flexibility (RECOMMENDED for cost savings)
+# - 6 = Acceptable, prioritizes meaning over strict meter
+SINGABILITY_THRESHOLD=7
+
+# Cultural Sensitivity: How strict on religious accuracy?
+# - 9-10 = Perfect adherence (very strict)
+# - 8 = Respectful with minor creative liberty
+# - 7 = Respectful, allows creativity (RECOMMENDED)
+# - 6 = Basic respect, flexible
+CULTURAL_THRESHOLD=7
+
+# Max Quality Retries: How many times to regenerate if quality check fails
+# - 3 = Maximum attempts (best quality, slowest)
+# - 2 = Default (balanced)
+# - 1 = One retry only (faster)
+# - 0 = No retries (fastest, accept whatever is generated)
+MAX_QUALITY_RETRIES=2
+
+# Enable Quality Checks: Turn the entire quality system on/off
+# - true = Check quality (default, recommended)
+# - false = Skip all checks (ultra-fast mode, for testing only)
+ENABLE_QUALITY_CHECKS=true
+
+# Use Iterative Refinement: How to handle failed quality checks?
+# - true = Refine existing lyrics (RECOMMENDED - saves cost, preserves good parts)
+# - false = Regenerate from scratch (expensive, may lose good elements)
+USE_ITERATIVE_REFINEMENT=true
+
+# Skip Final Polish (Chain 4): Skip the final refinement pass?
+# - true = Skip Chain 4 (faster, cheaper, rely on quality checks)
+# - false = Run Chain 4 polish pass (slower, extra safety net)
+SKIP_CHAIN4_REFINE=false
+
+# Auto-Complete Truncated Lyrics: Retry when lyrics are incomplete?
+# - true = Auto-detect and complete truncated lyrics (RECOMMENDED - better quality)
+# - false = Accept partial lyrics without retry (faster, cheaper, useful for debugging)
+# Cost: ~$0.0025 per retry (only when truncation detected, ~2% of songs)
+AUTO_COMPLETE_TRUNCATED=true
+
+# ==============================================================================
+# USAGE EXAMPLES
+# ==============================================================================
+
+# RECOMMENDED SETTINGS (Balanced quality and speed):
+# GEMINI_MODEL=gemini-1.5-flash
+# QUALITY_THRESHOLD=8
+# MAX_QUALITY_RETRIES=2
+# ENABLE_QUALITY_CHECKS=true
+
+# PERFECT QUALITY (Slow, expensive):
+# GEMINI_MODEL=gemini-1.5-pro
+# QUALITY_THRESHOLD=10
+# MAX_QUALITY_RETRIES=3
+# ENABLE_QUALITY_CHECKS=true
+
+# FAST TESTING (Quick, cheap):
+# GEMINI_MODEL=gemini-1.5-flash
+# QUALITY_THRESHOLD=6
+# MAX_QUALITY_RETRIES=1
+# ENABLE_QUALITY_CHECKS=true
+
+# ULTRA FAST (No checks):
+# GEMINI_MODEL=gemini-1.5-flash
+# QUALITY_THRESHOLD=5
+# MAX_QUALITY_RETRIES=0
+# ENABLE_QUALITY_CHECKS=false
+
+# ==============================================================================
+# COST BREAKDOWN & PERFORMANCE IMPACT
+# ==============================================================================
+
+# DUAL-MODEL MODE (USE_DUAL_MODELS=true) - RECOMMENDED:
+# Per song breakdown:
+#   1. Analysis (Flash):              $0.0001
+#   2. Song Generation (Pro):         $0.0150  ← Most expensive
+#   3. Quality Check (Flash):         $0.0001
+#   4. Metadata (Flash):              $0.0001
+#   5. Cultural Validation (Flash):   $0.0001
+#   TOTAL: ~$0.015-0.020 per song
+
+# SINGLE PRO MODE (all calls use Pro):
+#   TOTAL: ~$0.080-0.100 per song  ← 5x MORE EXPENSIVE!
+
+# SINGLE FLASH MODE (all calls use Flash):
+#   TOTAL: ~$0.001-0.002 per song  ← Cheapest but lower song quality
+
+# ==============================================================================
+# PERFORMANCE COMPARISON
+# ==============================================================================
+# Configuration: Dual-Model (Flash+Pro), Quality=8, Retries=2
+#   - Time per song: ~25-35 seconds
+#   - API calls: 3-4 calls (1 Pro, rest Flash)
+#   - Cost: ~$0.015-0.020 per song
+#   - Quality: Excellent (Pro-level songs, Flash-level validation)
+#   - 100 songs: $1.50-2.00 total
+#   ✅ BEST CHOICE: High quality + Low cost
+#
+# Configuration: Single Pro Model, Quality=8, Retries=2
+#   - Time per song: ~60-90 seconds
+#   - API calls: 3-4 calls (all Pro)
+#   - Cost: ~$0.080-0.100 per song
+#   - Quality: Excellent
+#   - 100 songs: $8.00-10.00 total
+#   ⚠️ 5x MORE EXPENSIVE for same quality!
+#
+# Configuration: Single Flash Model, Quality=8, Retries=2
+#   - Time per song: ~20-25 seconds
+#   - API calls: 3-4 calls (all Flash)
+#   - Cost: ~$0.001-0.002 per song
+#   - Quality: Good (but songs may lack depth)
+#   - 100 songs: $0.10-0.20 total
+#   ⚠️ Cheap but lower song quality
