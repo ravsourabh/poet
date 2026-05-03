@@ -3,26 +3,54 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/)
 
-Generate high-quality Hindi devotional songs (bhajans, qawwalis, folk songs) using Google Gemini AI with an optimized dual-model pipeline.
+> **Do you think all AI-generated songs sound the same?**
+>
+> Generic lyrics. Western chord progressions wearing a sitar costume. Mantras that no pandit would recognize. That's what you get when you prompt a general-purpose AI and hope for the best.
+>
+> **Poet is different.** It was built specifically for Hindi devotional music — bhajans, qawwalis, folk songs — with an 8-stage pipeline that understands *rasa*, deity mythology, regional styles, and the difference between a Meera bhajan and a Sufi qawwali. Every song passes three independent quality checks before you ever see it: Hindi grammar, singability, and cultural accuracy.
+>
+> The result sounds like it was written by someone who actually knows the tradition. Because the AI was guided to.
 
-**Version 3.0** - 40–50% cheaper, 50% faster, fully reliable.
+Generate complete, ready-to-sing Hindi devotional songs using Google Gemini — lyrics, Suno AI style tags, YouTube title/description, and quality scores, all in one run.
+
+![Poet in action](intro.gif)
 
 📖 **[Complete Guide](COMPLETE_GUIDE.md)** - full documentation of all features and configuration  
 🗺️ **[Roadmap](ROADMAP.md)** - planned improvements and future tasks
 
 ---
 
+## Sample output
+
+Here's a song generated entirely by Poet — lyrics, style tags, and all — then rendered in Suno AI:
+
+**[Listen on Suno](https://suno.com/song/bfdb9012-ffe9-45d1-8aef-280a42175ce6)**
+
+---
+
+## What makes it different
+
+| Generic AI prompting | Poet |
+|----------------------|------|
+| One model does everything | Flash model for cheap checks, Pro model for generation only |
+| Same structure every time | 30+ style-matched structures (qawwali ≠ bhajan ≠ folk) |
+| No cultural grounding | Deity mythology, authentic mantras, regional styles baked in |
+| Hope it's singable | Dedicated singability check scores rhythm and melody fit |
+| No safety net | 3 independent quality thresholds — regenerates if any fail |
+| Costs pile up fast | ~$0.02/song; 100 songs for ~$2 |
+
+---
+
 ## Features
 
-- **Dual-Model Cost Optimization** - Flash for validation, Pro for generation only
-- **Iterative Refinement** - fix issues instead of regenerating (saves API cost)
-- **Progress Tracking** - resume after crashes with automatic checkpoints
-- **Cost Reporting** - real-time visibility into API spend per song
-- **Backup Flash Model** - auto-recovery from rate limits
-- **3 Separate Quality Thresholds** - Hindi, Singability, Cultural (fine-grained control)
-- **30+ Unique Structures** - bhajan, qawwali, folk, meditative, sufi
-- **Cultural Validation** - religious sensitivity checks built into the pipeline
-- **8-Stage Pipeline** - Analysis → Generation → Quality → Metadata → Validation
+- **Culturally grounded** - deity stories, authentic mantras, regional style awareness
+- **30+ song structures** - style-matched templates: bhajan, qawwali, folk, meditative, sufi
+- **3-layer quality pipeline** - Hindi grammar, singability, and cultural sensitivity scored separately
+- **Dual-model cost control** - cheap Flash model for validation, Pro only when it matters
+- **Iterative refinement** - fixes issues in place instead of regenerating from scratch
+- **Suno AI ready** - outputs style tags formatted for direct paste into Suno
+- **YouTube ready** - generates title, description, and tags alongside every song
+- **Crash recovery** - automatic progress checkpoints; resume a 100-song batch mid-run
 
 ---
 
@@ -118,6 +146,17 @@ See `.env.example` for the full list with explanations.
 | Cost report shows $0 | Enable `USE_DUAL_MODELS=true` in `.env` |
 
 More help: [COMPLETE_GUIDE.md](COMPLETE_GUIDE.md)
+
+---
+
+## Publishing your songs
+
+Poet generates lyrics and metadata — it does not produce audio itself. The recommended workflow:
+
+1. **Generate audio** — paste the lyrics and Suno AI style tag from `content/` into [Suno.com](https://suno.com). Suno will render the full song with vocals and instrumentation.
+2. **Upload to YouTube** — use the pre-generated YouTube title, description, and tags from the same output file. This is where devotional content finds its largest audience.
+3. **Share on Suno** — Suno has a public discovery feed; keeping your songs public there builds a secondary audience.
+4. **Wider distribution** — if you want Spotify / Apple Music, export the audio from Suno and use a distributor like [DistroKid](https://distrokid.com) or [TuneCore](https://www.tunecore.com) (~$20/year for unlimited uploads).
 
 ---
 
